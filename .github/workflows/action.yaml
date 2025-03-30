@@ -15,7 +15,7 @@ jobs:
       - name: install libraries
         run: |
           cd function
-          pip install -r requirements.txt -t
+          pip install -r requirements.txt
       - name: create zip bundle
         run: |
           cd function
