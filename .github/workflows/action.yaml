@@ -1,22 +1,41 @@
-name: Deployimg Lambda Function
+name: Deploying Lambda Function
 
 on: 
   push:
     branches:
       - main
+
 jobs:
+
+  lint:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install libraries
+        run: pip install flake8
+      - name: Lint with flake8
+        run: |
+          cd function
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: check out code
+      - name: Check out code
         uses: actions/checkout@v2
-      - name: setup python
-        uses : actions/setup-python@v2
-      - name: install libraries
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - name: Install libraries
         run: |
           cd function
           pip install -r requirements.txt
-      - name: create zip bundle
+      - name: Create zip bundle
         run: |
           cd function
           zip -r ../${{ github.sha }}.zip .
@@ -25,5 +44,3 @@ jobs:
         with:  
           name: zipped-bundle
           path: ${{ github.sha }}.zip
-          
-  
