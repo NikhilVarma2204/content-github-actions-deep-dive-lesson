@@ -2,8 +2,6 @@ name: Deploying Lambda Function
 
 on: 
   push:
-    branches:
-      - main
 
 jobs:
 
