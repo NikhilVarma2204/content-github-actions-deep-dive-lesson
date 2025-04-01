@@ -53,7 +53,7 @@ jobs:
           with:
             tag_name: ${{ github.run_number }}
             release_name: Release from ${{ github.run_number }}.
-            body: Release from ${{ githuib.sha }}.
+            body: Release from ${{ github.sha }}.
             draft: false
             prerelase: false
             
